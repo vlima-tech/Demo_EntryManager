@@ -3,6 +3,7 @@
 
 ## EntryManager Project ##
 Docker/
+.DS_Store
 
 ### ASPNETCore ###
 ## Ignore Visual Studio temporary files, build results, and
