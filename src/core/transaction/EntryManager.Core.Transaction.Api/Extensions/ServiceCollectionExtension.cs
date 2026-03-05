@@ -35,6 +35,11 @@ public static class ServiceCollectionExtension
             {
                 cfg.AddProducer<CreateTransactionCommand>();
                 cfg.AddProducer<TransactionWasCreatedEvent>();
+            })
+            .AddConsumers(cfg =>
+            {
+                cfg.AddCommandConsumer<CreateTransactionCommand>();
+                cfg.AddEventConsumer<TransactionWasCreatedEvent>();
             }).Build();
             
             services.AddHttpContextAccessor();
