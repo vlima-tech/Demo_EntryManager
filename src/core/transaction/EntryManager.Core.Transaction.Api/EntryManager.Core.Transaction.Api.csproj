@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <AssemblyName>entrymanager-core-transaction-api</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.1.4" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Content Include="..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\shared\EntryManager.Shared.Api.Response\EntryManager.Shared.Api.Response.csproj" />
+      <ProjectReference Include="..\..\..\shared\EntryManager.Shared.Bus.Core\EntryManager.Shared.Bus.Core.csproj" />
+      <ProjectReference Include="..\..\..\shared\EntryManager.Shared.Bus.Kafka\EntryManager.Shared.Bus.Kafka.csproj" />
+      <ProjectReference Include="..\EntryManager.Core.Transaction.Contracts\EntryManager.Core.Transaction.Contracts.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Domain\" />
+      <Folder Include="Infra\" />
+    </ItemGroup>
+
+</Project>

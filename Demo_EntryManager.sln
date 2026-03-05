@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7F8960D7-8485-44E3-BEAE-D4883A746311}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{343B4908-3FCA-4D57-8E20-7DA4C4F05F98}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3046F985-86D2-4DEF-B080-FC3230ED00FB}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		docker-compose.yaml = docker-compose.yaml
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{E6DB2E0A-BF8E-4D6F-85A7-BE38EF870A68}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{21AFE2ED-E773-4CB4-BE82-E4F53A674452}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Shared.Bus.Abstractions", "src\shared\EntryManager.Shared.Bus.Abstractions\EntryManager.Shared.Bus.Abstractions.csproj", "{B8A79461-959C-4ED5-91CC-1DF16F409AE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Shared.Bus.Core", "src\shared\EntryManager.Shared.Bus.Core\EntryManager.Shared.Bus.Core.csproj", "{592822E8-43A6-4275-8F58-9B7EF3900267}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Shared.Api.Response", "src\shared\EntryManager.Shared.Api.Response\EntryManager.Shared.Api.Response.csproj", "{801E3272-0D38-49B3-AB6E-CE7EF8F7129A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "transaction", "transaction", "{69A52098-48CF-4EA8-9383-406291B5FB54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Core.Transaction.Contracts", "src\core\transaction\EntryManager.Core.Transaction.Contracts\EntryManager.Core.Transaction.Contracts.csproj", "{7383895B-4375-4A8B-9713-6D74AB82D6F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Core.Transaction.Api", "src\core\transaction\EntryManager.Core.Transaction.Api\EntryManager.Core.Transaction.Api.csproj", "{BFA5F167-C842-416B-BA85-68350407934B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Shared.Interop", "src\shared\EntryManager.Shared.Interop\EntryManager.Shared.Interop.csproj", "{9F359AE4-210B-4781-9189-3F88A854E181}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Shared.Bus.Kafka", "src\shared\EntryManager.Shared.Bus.Kafka\EntryManager.Shared.Bus.Kafka.csproj", "{3CC21CA9-2C5E-47FA-B1F4-77191277BF3F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E6DB2E0A-BF8E-4D6F-85A7-BE38EF870A68} = {7F8960D7-8485-44E3-BEAE-D4883A746311}
+		{21AFE2ED-E773-4CB4-BE82-E4F53A674452} = {7F8960D7-8485-44E3-BEAE-D4883A746311}
+		{B8A79461-959C-4ED5-91CC-1DF16F409AE7} = {21AFE2ED-E773-4CB4-BE82-E4F53A674452}
+		{592822E8-43A6-4275-8F58-9B7EF3900267} = {21AFE2ED-E773-4CB4-BE82-E4F53A674452}
+		{801E3272-0D38-49B3-AB6E-CE7EF8F7129A} = {21AFE2ED-E773-4CB4-BE82-E4F53A674452}
+		{69A52098-48CF-4EA8-9383-406291B5FB54} = {E6DB2E0A-BF8E-4D6F-85A7-BE38EF870A68}
+		{7383895B-4375-4A8B-9713-6D74AB82D6F3} = {69A52098-48CF-4EA8-9383-406291B5FB54}
+		{BFA5F167-C842-416B-BA85-68350407934B} = {69A52098-48CF-4EA8-9383-406291B5FB54}
+		{9F359AE4-210B-4781-9189-3F88A854E181} = {21AFE2ED-E773-4CB4-BE82-E4F53A674452}
+		{3CC21CA9-2C5E-47FA-B1F4-77191277BF3F} = {21AFE2ED-E773-4CB4-BE82-E4F53A674452}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8A79461-959C-4ED5-91CC-1DF16F409AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A79461-959C-4ED5-91CC-1DF16F409AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A79461-959C-4ED5-91CC-1DF16F409AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A79461-959C-4ED5-91CC-1DF16F409AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{592822E8-43A6-4275-8F58-9B7EF3900267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{592822E8-43A6-4275-8F58-9B7EF3900267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{592822E8-43A6-4275-8F58-9B7EF3900267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{592822E8-43A6-4275-8F58-9B7EF3900267}.Release|Any CPU.Build.0 = Release|Any CPU
+		{801E3272-0D38-49B3-AB6E-CE7EF8F7129A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{801E3272-0D38-49B3-AB6E-CE7EF8F7129A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{801E3272-0D38-49B3-AB6E-CE7EF8F7129A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{801E3272-0D38-49B3-AB6E-CE7EF8F7129A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7383895B-4375-4A8B-9713-6D74AB82D6F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7383895B-4375-4A8B-9713-6D74AB82D6F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7383895B-4375-4A8B-9713-6D74AB82D6F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7383895B-4375-4A8B-9713-6D74AB82D6F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFA5F167-C842-416B-BA85-68350407934B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFA5F167-C842-416B-BA85-68350407934B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFA5F167-C842-416B-BA85-68350407934B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFA5F167-C842-416B-BA85-68350407934B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F359AE4-210B-4781-9189-3F88A854E181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F359AE4-210B-4781-9189-3F88A854E181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F359AE4-210B-4781-9189-3F88A854E181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F359AE4-210B-4781-9189-3F88A854E181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC21CA9-2C5E-47FA-B1F4-77191277BF3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC21CA9-2C5E-47FA-B1F4-77191277BF3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC21CA9-2C5E-47FA-B1F4-77191277BF3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC21CA9-2C5E-47FA-B1F4-77191277BF3F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
