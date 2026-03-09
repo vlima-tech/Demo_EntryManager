@@ -8,6 +8,7 @@ namespace EntryManager.Core.Transaction.Api.Core.CommandHandlers.AccountCommandH
 public class UpdateAccountCommandHandler(IServiceProvider provider) : ICommandHandler<UpdateAccountCommand>
 {
     private IAccountRepository _accountRepository = provider.GetRequiredService<IAccountRepository>();
+    private INotificationStore _store = provider.GetRequiredService<INotificationStore>();
     
     public async Task<bool> Handle(UpdateAccountCommand command, CancellationToken cancellationToken)
     {
@@ -17,7 +18,9 @@ public class UpdateAccountCommandHandler(IServiceProvider provider) : ICommandHa
         
         account.ChangeName(request.Name);
         
-        return await this._accountRepository.UpdateAsync(account, cancellationToken);
+        await this._accountRepository.UpdateAsync(account, cancellationToken);
+        
+        return !this._store.HasNotifications();
     }
 
     public void Dispose()

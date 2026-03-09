@@ -7,6 +7,7 @@ namespace EntryManager.Core.Transaction.Api.Core.CommandHandlers.GroupCommandHan
 public class UpdateGroupCommandHandler(IServiceProvider provider) : ICommandHandler<UpdateGroupCommand>
 {
     private IGroupRepository _groupRepository = provider.GetRequiredService<IGroupRepository>();
+    private INotificationStore _store = provider.GetRequiredService<INotificationStore>();
     
     public async Task<bool> Handle(UpdateGroupCommand command, CancellationToken cancellationToken)
     {
@@ -16,7 +17,9 @@ public class UpdateGroupCommandHandler(IServiceProvider provider) : ICommandHand
         
         group.ChangeName(request.Name, request.Description);
         
-        return await this._groupRepository.UpdateAsync(group, cancellationToken);
+        await this._groupRepository.UpdateAsync(group, cancellationToken);
+
+        return !this._store.HasNotifications();
     }
 
     public void Dispose()
