@@ -26,6 +26,17 @@ public class GroupReadRepository : BaseReadRepository<GroupModel, Guid>, IGroupR
         return query.FirstOrDefault() is not null;
     }
 
+    public override async Task<GroupModel?> FindByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var group = await base.FindByIdAsync(id, cancellationToken);
+
+        if (group is null) return default;
+        
+        var account = await this._accountRepository.FindByIdAsync(group.AccountId, cancellationToken);
+        
+        return new GroupModel(group.Id, group.Name, group.Description, group.Type, account);
+    }
+    
     public bool NotExists(string groupName) => !this.Exists(groupName);
     
     public override async Task<IEnumerable<GroupModel>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -45,7 +56,7 @@ public class GroupReadRepository : BaseReadRepository<GroupModel, Guid>, IGroupR
         return finalGroups.ToList();
     }
 
-    async Task<ListGroupResponse> IGroupQuery.GetAllAsync(CancellationToken cancellationToken)
+    public async Task<ListGroupResponse> ObtainsAllAsync(CancellationToken cancellationToken)
     {
         var result = await this.GetAllAsync(cancellationToken);
 

@@ -30,6 +30,10 @@ internal static class DatabaseExtension
             services.AddScoped<IGroupReadRepository, GroupReadRepository>();
             services.AddScoped<IGroupQuery, GroupReadRepository>();
             
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
+            services.AddScoped<ICategoryQuery, CategoryReadRepository>();
+            
             return services;
         }
     }
