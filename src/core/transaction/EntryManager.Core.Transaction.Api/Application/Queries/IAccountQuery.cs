@@ -10,7 +10,7 @@ public interface IAccountQuery
     /// </summary>
     /// <param name="cancellationToken">A token to monitor for cancellation requests</param>
     /// <returns>A collection containing all models. If no models exist, an empty list is returned.</returns>
-    Task<ListAccountResponse> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<ListAccountResponse> ObtainsAllAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously finds a account by name.

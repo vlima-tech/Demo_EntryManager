@@ -17,7 +17,7 @@ public class AccountReadRepository : BaseReadRepository<AccountModel, Guid>, IAc
         : base(context, serviceBus, Collections.ACCOUNT)
     { }
 
-    public async Task<ListAccountResponse> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<ListAccountResponse> ObtainsAllAsync(CancellationToken cancellationToken = default)
     {
         var accounts = await base.GetAllAsync(cancellationToken);
         

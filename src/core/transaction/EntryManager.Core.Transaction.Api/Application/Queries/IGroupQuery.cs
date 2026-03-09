@@ -9,7 +9,7 @@ public interface IGroupQuery
     /// </summary>
     /// <param name="cancellationToken">A token to monitor for cancellation requests</param>
     /// <returns>A collection containing all models. If no models exist, an empty list is returned.</returns>
-    Task<ListGroupResponse> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<ListGroupResponse> ObtainsAllAsync(CancellationToken cancellationToken = default);
     
     /// <summary>
     /// Asynchronously finds a group by name.

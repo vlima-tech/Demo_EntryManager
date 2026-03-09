@@ -16,7 +16,7 @@ public class AccountsController(IServiceProvider provider) : InternalControllerB
     [HttpGet]
     public async Task<IActionResult> ListAsync(CancellationToken cancellationToken)
     {
-        var result = await this._query.GetAllAsync(cancellationToken);
+        var result = await this._query.ObtainsAllAsync(cancellationToken);
         
         return await this.ResponseAsync(result);
     }
