@@ -14,7 +14,7 @@ public interface IBaseReadRepository<TModel, in TKey> : IDisposable
     bool Exists(TKey id);
 
     /// <summary>
-    /// Checks if the specified model exists in the repository based on its <see cref="TModel.Id"/>.
+    /// Checks if the specified model exists in the repository based on its <see cref="TKey"/>.
     /// </summary>
     /// <param name="model">The model instance to verify.</param>
     /// <returns>True if a model with the same identification key exists; otherwise, false.</returns>
@@ -34,6 +34,14 @@ public interface IBaseReadRepository<TModel, in TKey> : IDisposable
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>The model if found; otherwise, null.</returns>
     Task<TModel?> FindByIdAsync(TKey id, CancellationToken cancellationToken = default);
+    
+    /// <summary>
+    /// Asynchronously finds a collection of models by their <see cref="TKey"/> identifiers.
+    /// </summary>
+    /// <param name="ids">The collection of identification keys to search for.</param>
+    /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+    /// <returns>The model if found; otherwise, null.</returns>
+    Task<IEnumerable<TModel>> FindByIdAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Filters a sequence of models based on a predicate.

@@ -35,8 +35,9 @@ public class BaseRepository<TModel, TKey> : IBaseRepository<TModel, TKey> where 
     public virtual async Task<bool> CreateAsync(TModel model, CancellationToken cancellationToken = default)
     {
         try
-        {
+        { 
             await this.Db.InsertOneAsync(model, cancellationToken);
+            
             return true;
         }
         catch(Exception e)
@@ -380,6 +381,15 @@ public class BaseRepository<TModel, TKey> : IBaseRepository<TModel, TKey> where 
     /// <returns>The model if found; otherwise, null.</returns>
     public Task<TModel?> FindByIdAsync(TKey id, CancellationToken cancellationToken = default)
         => this._readRepository.FindByIdAsync(id, cancellationToken);
+    
+    /// <summary>
+    /// Asynchronously finds a collection of models by their <see cref="TKey"/> identifiers.
+    /// </summary>
+    /// <param name="ids">The collection of identification keys to search for.</param>
+    /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
+    /// <returns>The model if found; otherwise, null.</returns>
+    public Task<IEnumerable<TModel>> FindByIdAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
+        => this._readRepository.FindByIdAsync(ids, cancellationToken);
     
     /// <summary>
     /// Filters a sequence of models based on a predicate.

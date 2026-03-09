@@ -37,7 +37,7 @@ public abstract class BaseReadRepository<TModel, TKey> : IBaseReadRepository<TMo
             => this.Db.Find(e => e.Id!.Equals(id)).Any();
         
         /// <summary>
-        /// Checks if the specified model exists in the repository based on its <see cref="TModel.Id"/>.
+        /// Checks if the specified model exists in the repository based on its <see cref="TKey"/>.
         /// </summary>
         /// <param name="model">The model instance to verify.</param>
         /// <returns>True if a model with the same identification key exists; otherwise, false.</returns>
@@ -73,6 +73,9 @@ public abstract class BaseReadRepository<TModel, TKey> : IBaseReadRepository<TMo
 
             return default;
         }
+
+        public async Task<IEnumerable<TModel>> FindByIdAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
+            => await this.Db.Find(Builders<TModel>.Filter.In(f => f.Id, ids)).ToListAsync(cancellationToken);
         
         /// <summary>
         /// Filters a sequence of models based on a predicate.
