@@ -6,9 +6,11 @@ namespace EntryManager.Shared.Interop;
 
 internal class CorrelationContext : Dictionary<string, StringValues>, ICorrelation
 {
+    public CorrelationContext() => this.EnsureEssentialCorrelation();
+    
     public string GetTraceId() => this[KnowHeaders.TraceId].ToString();
     
-    public string GetTraceParent() => this[KnowHeaders.TraceParent].ToString();
+    public string GetTrace() => this[KnowHeaders.Trace].ToString();
 
     public string GetIdempotencyKey() => this[KnowHeaders.IdempotencyKey].ToString(); 
 
@@ -25,10 +27,13 @@ internal class CorrelationContext : Dictionary<string, StringValues>, ICorrelati
     public void PropagateContext(IEnumerable<KeyValuePair<string, StringValues>> headers)
     {
         base.Clear();
-        
+
         foreach (var keyValuePair in headers)
-            base.Add(keyValuePair.Key, keyValuePair.Value);
-        
+        {
+            if (keyValuePair.Value.Count > 0)
+                base.Add(keyValuePair.Key, keyValuePair.Value);
+        }
+
         this.EnsureEssentialCorrelation();
     }
     
@@ -36,8 +41,7 @@ internal class CorrelationContext : Dictionary<string, StringValues>, ICorrelati
     {
         var correlations = new KeyValuePair<string, Action>[]
         {
-            new (KnowHeaders.TraceId, GenerateTraceId),
-            new (KnowHeaders.TraceParent, GenerateTraceParent),
+            new (KnowHeaders.Trace, GenerateTrace),
             new (KnowHeaders.CorrelationId, GenerateCorrelationId),
             new (KnowHeaders.IdempotencyKey, GenerateIdempotencyKey),
             new (KnowHeaders.Metadata, GenerateMetadata),
@@ -48,24 +52,12 @@ internal class CorrelationContext : Dictionary<string, StringValues>, ICorrelati
 
         return;
 
-        void GenerateTraceId()
+        void GenerateTrace()
         {
-            var traceId = Activity.Current?.TraceId.ToString();
+            var activity = Activity.Current ?? new Activity("CorrelationContext");
             
-            if (string.IsNullOrWhiteSpace(traceId))
-                traceId = Guid.NewGuid().ToString();
-            
-            this.Add(KnowHeaders.TraceId, traceId);
-        }
-        
-        void GenerateTraceParent()
-        {
-            var traceParent = Activity.Current?.ParentId;
-            
-            if (string.IsNullOrWhiteSpace(traceParent))
-                traceParent = ActivitySpanId.CreateRandom().ToHexString();
-            
-            this.Add(KnowHeaders.TraceParent, traceParent);
+            this.Add(KnowHeaders.TraceId, activity.TraceId.ToString());
+            this.Add(KnowHeaders.Trace, activity.Id);
         }
 
         void GenerateCorrelationId() => this.Add(KnowHeaders.CorrelationId, Guid.NewGuid().ToString());

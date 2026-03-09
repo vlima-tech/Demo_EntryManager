@@ -34,9 +34,9 @@ public abstract class BaseController(IServiceProvider provider) : ControllerBase
             ? traceId.ToString()
             : Activity.Current?.TraceId.ToHexString() ?? new Activity("CorrelationContext").TraceId.ToHexString();
         
-        var parentIdKey = headers.TryGetValue(KnowHeaders.TraceParent, out var traceparent)
-            ? traceparent.ToString()
-            : Activity.Current?.ParentId ?? new Activity("CorrelationContext").ParentId;
+        var traceKey = headers.TryGetValue(KnowHeaders.Trace, out var trace)
+            ? trace.ToString()
+            : Activity.Current?.Id ?? new Activity("CorrelationContext").Id;
         
         var correlationIdKey = headers.TryGetValue(KnowHeaders.CorrelationId, out var correlationId)
             ? correlationId.ToString()
@@ -51,7 +51,7 @@ public abstract class BaseController(IServiceProvider provider) : ControllerBase
             : string.Empty;
         
         correlationKeys.Add(KnowHeaders.TraceId, traceIdKey);
-        correlationKeys.Add(KnowHeaders.TraceParent, parentIdKey);
+        correlationKeys.Add(KnowHeaders.Trace, traceKey);
         correlationKeys.Add(KnowHeaders.CorrelationId, correlationIdKey);
         correlationKeys.Add(KnowHeaders.IdempotencyKey, idempotencyKey);
         correlationKeys.Add(KnowHeaders.Metadata, metadataKey);

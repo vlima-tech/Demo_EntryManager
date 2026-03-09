@@ -11,7 +11,7 @@ public interface ICorrelation : IReadOnlyDictionary<string, StringValues>
 {
     string GetTraceId();
 
-    string GetTraceParent();
+    string GetTrace();
     
     string GetIdempotencyKey();
     
