@@ -1,3 +1,4 @@
+using EntryManager.Core.Transaction.Api.Domain.Enums;
 using EntryManager.Shared.Domain.Abstractions.Models;
 
 namespace EntryManager.Core.Transaction.Api.Domain.Models;
@@ -7,6 +8,8 @@ public class CategoryModel : BaseModel
     public Guid GroupId { get; private set; }
     
     public string Name { get; private set; }
+    
+    public EntryType EntryType { get; private set; }
 
     public GroupModel Group { get; private set; }
 
@@ -17,6 +20,7 @@ public class CategoryModel : BaseModel
     {
         this.Name = name;
         this.GroupId = group.Id;
+        this.EntryType = group.Type;
         this.Group = group;
     }
     

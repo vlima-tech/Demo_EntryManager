@@ -15,6 +15,7 @@ public class TransactionContext(DbContextOptions options) : DbContext(options)
         builder.ApplyEntityMapping(new AccountMapping());
         builder.ApplyEntityMapping(new GroupMapping());
         builder.ApplyEntityMapping(new CategoryMapping());
+        builder.ApplyEntityMapping(new TransactionMapping());
         
         base.OnModelCreating(builder);
     }

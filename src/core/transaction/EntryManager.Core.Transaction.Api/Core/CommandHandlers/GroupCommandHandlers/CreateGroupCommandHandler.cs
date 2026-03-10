@@ -18,7 +18,7 @@ public class CreateGroupCommandHandler(IServiceProvider provider) : ICommandHand
         var request = command.Request;
         
         var account = await this._accountRepository.FindByNameAsync(request.AccountName, cancellationToken);
-        var group = GroupModel.Create(request.Name, request.Description, (GroupType)request.Type, account);
+        var group = GroupModel.Create(request.Name, request.Description, (EntryType)request.Type, account);
         
         await this._groupRepository.CreateAsync(group, cancellationToken);
 
@@ -27,9 +27,9 @@ public class CreateGroupCommandHandler(IServiceProvider provider) : ICommandHand
 
         return new CreateGroupResponse
         {
-            Id = group.Id,
+            GroupId = group.Id,
             Name = group.Name,
-            Type = (Contracts.Enums.GroupType)group.Type,
+            Type = (Contracts.Enums.EntryType)group.Type,
             Account = group.Account.Name
         };
     }

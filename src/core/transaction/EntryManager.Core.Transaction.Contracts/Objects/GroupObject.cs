@@ -4,11 +4,11 @@ namespace EntryManager.Core.Transaction.Contracts.Objects;
 
 public class GroupObject
 {
-    public Guid Id { get; set; }
+    public Guid GroupId { get; set; }
 
     public string Name { get; set; }
 
-    public GroupType Type { get; set; }
+    public EntryType Type { get; set; }
     
     public string Account { get; set; }
 }

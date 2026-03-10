@@ -27,9 +27,9 @@ public class CreateCategoryCommandHandler(IServiceProvider provider) : ICommandH
             Name = category.Name,
             Group = new GroupObject
             {
-                Id = group.Id,
+                GroupId = group.Id,
                 Name = group.Name,
-                Type = (Contracts.Enums.GroupType)group.Type,
+                Type = (Contracts.Enums.EntryType)group.Type,
                 Account = group.Account.Name
             }
         };

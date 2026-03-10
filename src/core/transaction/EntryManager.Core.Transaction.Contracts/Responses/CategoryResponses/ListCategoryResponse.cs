@@ -13,6 +13,6 @@ public class ListCategoryResponse(IEnumerable<ListCategoryResponse.CategoryObjec
 
         public string Group { get; set; }
 
-        public GroupType Type { get; set; }
+        public EntryType Type { get; set; }
     }
 }

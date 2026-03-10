@@ -3,7 +3,7 @@ using EntryManager.Shared.Bus.Abstractions;
 
 namespace EntryManager.Core.Transaction.Api.Application.Commands.TransactionCommands;
 
-public class CreateTransactionCommand(CreateTransactionRequest request) : Command(ExecutionMode.Enqueue)
+public class RegisterTransactionCommand(RegisterTransactionRequest request) : Command
 {
-    public CreateTransactionRequest Request { get; private set; } = request;
+    public RegisterTransactionRequest Request { get; } = request;
 }

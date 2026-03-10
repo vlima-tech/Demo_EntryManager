@@ -62,9 +62,9 @@ public class GroupReadRepository : BaseReadRepository<GroupModel, Guid>, IGroupR
 
         var groupObjects = result.Select(group => new GroupObject
         {
-            Id = group.Id,
+            GroupId = group.Id,
             Name = group.Name,
-            Type = (Contracts.Enums.GroupType) group.Type,
+            Type = (Contracts.Enums.EntryType) group.Type,
             Account = group.Account.Name
         });
         
@@ -83,9 +83,9 @@ public class GroupReadRepository : BaseReadRepository<GroupModel, Guid>, IGroupR
             
             return new FindGroupByNameResponse
             {
-                Id = group.Id,
+                GroupId = group.Id,
                 Name = group.Name,
-                Type = (Contracts.Enums.GroupType) group.Type,
+                Type = (Contracts.Enums.EntryType) group.Type,
                 Account = account.Name
             };
         }

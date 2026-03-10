@@ -13,7 +13,7 @@ public class GroupModel : BaseModel
     
     public string Description { get; private set; }
 
-    public GroupType Type { get; private set; }
+    public EntryType Type { get; private set; }
 
     public AccountModel Account { get; private set; }
     
@@ -23,7 +23,7 @@ public class GroupModel : BaseModel
 
     public GroupModel() { }
 
-    public GroupModel(string name, string description, GroupType type, AccountModel account) : this()
+    public GroupModel(string name, string description, EntryType type, AccountModel account) : this()
     {
         this.AccountId = account.Id;
         this.Name = name?.Trim();
@@ -32,7 +32,7 @@ public class GroupModel : BaseModel
         this.Account = account;
     }
     
-    public GroupModel(Guid groupId, string name, string description, GroupType type, AccountModel account)
+    public GroupModel(Guid groupId, string name, string description, EntryType type, AccountModel account)
     : this(name, description, type, account)
     {
         this.Id = groupId;
@@ -40,10 +40,10 @@ public class GroupModel : BaseModel
     
     #endregion
 
-    public static GroupModel Create(string name, string description, GroupType type, AccountModel accountModel)
+    public static GroupModel Create(string name, string description, EntryType type, AccountModel accountModel)
         => new(name, description, type, accountModel);
     
-    public static GroupModel Create(Guid groupId, string name, string description, GroupType type, AccountModel accountModel)
+    public static GroupModel Create(Guid groupId, string name, string description, EntryType type, AccountModel accountModel)
         => new(groupId, name, description, type, accountModel);
     
     public void ChangeName(string groupName)

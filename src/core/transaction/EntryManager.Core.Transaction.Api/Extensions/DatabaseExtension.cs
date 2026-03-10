@@ -34,6 +34,10 @@ internal static class DatabaseExtension
             services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
             services.AddScoped<ICategoryQuery, CategoryReadRepository>();
             
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ITransactionReadRepository, TransactionReadRepository>();
+            services.AddScoped<ITransactionQuery, TransactionReadRepository>();
+            
             return services;
         }
     }

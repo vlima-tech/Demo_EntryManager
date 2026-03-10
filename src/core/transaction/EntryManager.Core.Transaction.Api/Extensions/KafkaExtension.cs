@@ -1,4 +1,3 @@
-using EntryManager.Core.Transaction.Api.Application.Commands.TransactionCommands;
 using EntryManager.Core.Transaction.Contracts.Events.TransactionEvents;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -17,13 +16,11 @@ internal static class KafkaExtension
                     op.SetAppNameFromDefaultConvention();
                 }).AddProducers(cfg =>
                 {
-                    cfg.AddProducer<CreateTransactionCommand>();
                     cfg.AddProducer<TransactionWasCreatedEvent>();
                 })
                 .AddConsumers(cfg =>
                 {
-                    cfg.AddCommandConsumer<CreateTransactionCommand>();
-                    cfg.AddEventConsumer<TransactionWasCreatedEvent>();
+                    
                 }).Build();
 
             return services;

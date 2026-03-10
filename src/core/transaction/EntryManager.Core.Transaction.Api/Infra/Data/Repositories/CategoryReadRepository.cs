@@ -2,11 +2,9 @@ using EntryManager.Core.Transaction.Api.Application.Queries;
 using EntryManager.Core.Transaction.Api.Domain.Interfaces.Repositories;
 using EntryManager.Core.Transaction.Api.Domain.Models;
 using EntryManager.Core.Transaction.Api.Infra.Data.Context;
-using EntryManager.Core.Transaction.Contracts.Objects;
 using EntryManager.Core.Transaction.Contracts.Responses.CategoryResponses;
 using EntryManager.Shared.Bus.Abstractions;
 using EntryManager.Shared.Data.MongoDB.Repositories;
-using EntryManager.Shared.Domain.Abstractions;
 
 namespace EntryManager.Core.Transaction.Api.Infra.Data.Repositories;
 
@@ -18,6 +16,14 @@ public class CategoryReadRepository : BaseReadRepository<CategoryModel, Guid>, I
         : base(context, serviceBus, Collections.CATEGORY)
         => this._groupRepository = provider.GetRequiredService<IGroupReadRepository>();
 
+    public override async Task<CategoryModel?> FindByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var category = await base.FindByIdAsync(id, cancellationToken);
+        var group = await this._groupRepository.FindByIdAsync(category.GroupId, cancellationToken);
+        
+        return category is null ? null : new CategoryModel(category.Id, category.Name, group);
+    }
+    
     public override async Task<IEnumerable<CategoryModel>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var categories = await base.GetAllAsync(cancellationToken);
@@ -44,7 +50,7 @@ public class CategoryReadRepository : BaseReadRepository<CategoryModel, Guid>, I
             Id = category.Id,
             Name = category.Name,
             Group = category.Group.Name,
-            Type = (Contracts.Enums.GroupType) category.Group.Type
+            Type = (Contracts.Enums.EntryType) category.Group.Type
         });
         
         return new ListCategoryResponse(categoryObjects);

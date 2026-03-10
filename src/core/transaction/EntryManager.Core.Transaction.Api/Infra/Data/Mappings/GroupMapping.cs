@@ -19,7 +19,7 @@ public class GroupMapping : IEntityTypeConfiguration<GroupModel>
             .SetSerializer(new GuidSerializer(GuidRepresentation.Standard));
         
         builder.MapMember(acc => acc.Type)
-            .SetSerializer(new EnumSerializer<GroupType>(BsonType.String));
+            .SetSerializer(new EnumSerializer<EntryType>(BsonType.String));
 
         builder.UnmapProperty(group => group.Account);
         
