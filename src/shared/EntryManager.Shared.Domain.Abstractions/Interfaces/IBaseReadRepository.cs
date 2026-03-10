@@ -26,7 +26,28 @@ public interface IBaseReadRepository<TModel, in TKey> : IDisposable
     /// <param name="predicate">A function to test each model for a condition.</param>
     /// <returns>True if any model satisfies the condition; otherwise, false.</returns>
     bool Exists(Expression<Func<TModel, bool>> predicate);
+    
+    /// <summary>
+    /// Checks if a model not exists by its identification key.
+    /// </summary>
+    /// <param name="id">The identification key.</param>
+    /// <returns>True if the model not exists; otherwise, false.</returns>
+    bool NotExists(TKey id);
 
+    /// <summary>
+    /// Checks if the specified model not exists in the repository based on its <see cref="TKey"/>.
+    /// </summary>
+    /// <param name="model">The model instance to verify.</param>
+    /// <returns>True if a model with the same identification key not exists; otherwise, false.</returns>
+    bool NotExists(TModel model);
+
+    /// <summary>
+    /// Checks if a model not exists based on a predicate.
+    /// </summary>
+    /// <param name="predicate">A function to test each model for a condition.</param>
+    /// <returns>True if any model not satisfies the condition; otherwise, false.</returns>
+    bool NotExists(Expression<Func<TModel, bool>> predicate);
+    
     /// <summary>
     /// Asynchronously finds a model by its <see cref="TKey"/>.
     /// </summary>
