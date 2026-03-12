@@ -31,10 +31,10 @@ public class GroupsController(IServiceProvider provider) : InternalControllerBas
         return await this.ResponseAsync(result);
     }
     
-    [HttpGet("{groupName}/details")]
-    public async Task<IActionResult> FindByNameAsync(string groupName, CancellationToken cancellationToken)
+    [HttpGet("{groupId:guid}/details")]
+    public async Task<IActionResult> FindByIdAsync(Guid groupId, CancellationToken cancellationToken)
     {
-        var result = await this._query.FindByNameAsync(groupName, cancellationToken);
+        var result = await this._query.ObtainsByIdAsync(groupId, cancellationToken);
         
         var statusCode = result is null ? HttpStatusCode.NotFound : HttpStatusCode.OK;
         

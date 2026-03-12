@@ -17,7 +17,7 @@ public class GroupReadRepository : BaseReadRepository<GroupModel, Guid>, IGroupR
     public GroupReadRepository(TransactionContext context, IServiceBus serviceBus, IServiceProvider provider)
         : base(context, serviceBus, Collections.GROUP)
         => this._accountRepository = provider.GetRequiredService<IAccountReadRepository>();
-
+    
     public bool Exists(string groupName)
     {
         var query = base.Query()
@@ -25,7 +25,9 @@ public class GroupReadRepository : BaseReadRepository<GroupModel, Guid>, IGroupR
 
         return query.FirstOrDefault() is not null;
     }
-
+    
+    public bool NotExists(string groupName) => !this.Exists(groupName);
+    
     public override async Task<GroupModel?> FindByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var group = await base.FindByIdAsync(id, cancellationToken);
@@ -37,7 +39,6 @@ public class GroupReadRepository : BaseReadRepository<GroupModel, Guid>, IGroupR
         return new GroupModel(group.Id, group.Name, group.Description, group.Type, account);
     }
     
-    public bool NotExists(string groupName) => !this.Exists(groupName);
     
     public override async Task<IEnumerable<GroupModel>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -56,7 +57,7 @@ public class GroupReadRepository : BaseReadRepository<GroupModel, Guid>, IGroupR
         return finalGroups.ToList();
     }
 
-    public async Task<ListGroupResponse> ObtainsAllAsync(CancellationToken cancellationToken)
+    async Task<ListGroupResponse> IGroupQuery.ObtainsAllAsync(CancellationToken cancellationToken)
     {
         var result = await this.GetAllAsync(cancellationToken);
 
@@ -65,36 +66,34 @@ public class GroupReadRepository : BaseReadRepository<GroupModel, Guid>, IGroupR
             GroupId = group.Id,
             Name = group.Name,
             Type = (Contracts.Enums.EntryType) group.Type,
-            Account = group.Account.Name
+            Account = new AccountObject
+            {
+                AccountId = group.AccountId,
+                Name = group.Account.Name,
+                Status = (Contracts.Enums.AccountStatus) group.Account.Status
+            }
         });
         
         return new ListGroupResponse(groupObjects);
     }
 
-    public async Task<FindGroupByNameResponse?> FindByNameAsync(string groupName, CancellationToken cancellationToken = default)
+    async Task<FindGroupByIdResponse?> IGroupQuery.ObtainsByIdAsync(Guid groupId, CancellationToken cancellationToken)
     {
-        try
+        var group = await this.FindByIdAsync(groupId, cancellationToken);
+        
+        if (group is null) return default;
+        
+        return new FindGroupByIdResponse
         {
-            var query = base.Query()
-                .Where(a => a.Name.ToLowerInvariant().Equals(groupName.ToLowerInvariant()));
-            
-            var group = await query.FirstOrDefaultAsync(cancellationToken);
-            var account = await this._accountRepository.FindByIdAsync(group.AccountId, cancellationToken);
-            
-            return new FindGroupByNameResponse
+            GroupId = group.Id,
+            Name = group.Name,
+            Type = (Contracts.Enums.EntryType) group.Type,
+            Account = new AccountObject
             {
-                GroupId = group.Id,
-                Name = group.Name,
-                Type = (Contracts.Enums.EntryType) group.Type,
-                Account = account.Name
-            };
-        }
-        catch (Exception e)
-        {
-            var msg = $"An error occurred while finding {nameof(GroupModel)} by name: {groupName}.";
-            await this.ServiceBus.PublishAsync(new SystemError(msg, e), cancellationToken);
-        }
-
-        return default;
+                AccountId = group.AccountId,
+                Name = group.Account.Name,
+                Status = (Contracts.Enums.AccountStatus) group.Account.Status
+            }
+        };
     }
 }

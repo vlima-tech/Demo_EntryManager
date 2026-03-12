@@ -2,6 +2,7 @@ using EntryManager.Core.Transaction.Api.Application.Commands.GroupCommands;
 using EntryManager.Core.Transaction.Api.Domain.Enums;
 using EntryManager.Core.Transaction.Api.Domain.Interfaces.Repositories;
 using EntryManager.Core.Transaction.Api.Domain.Models;
+using EntryManager.Core.Transaction.Contracts.Objects;
 using EntryManager.Core.Transaction.Contracts.Responses.GroupResponses;
 using EntryManager.Shared.Bus.Abstractions;
 
@@ -17,7 +18,7 @@ public class CreateGroupCommandHandler(IServiceProvider provider) : ICommandHand
     {
         var request = command.Request;
         
-        var account = await this._accountRepository.FindByNameAsync(request.AccountName, cancellationToken);
+        var account = await this._accountRepository.FindByIdAsync(request.AccountId, cancellationToken);
         var group = GroupModel.Create(request.Name, request.Description, (EntryType)request.Type, account);
         
         await this._groupRepository.CreateAsync(group, cancellationToken);
@@ -30,7 +31,12 @@ public class CreateGroupCommandHandler(IServiceProvider provider) : ICommandHand
             GroupId = group.Id,
             Name = group.Name,
             Type = (Contracts.Enums.EntryType)group.Type,
-            Account = group.Account.Name
+            Account = new AccountObject
+            {
+                AccountId = group.AccountId,
+                Name = group.Account.Name,
+                Status = (Contracts.Enums.AccountStatus)group.Account.Status
+            }
         };
     }
 

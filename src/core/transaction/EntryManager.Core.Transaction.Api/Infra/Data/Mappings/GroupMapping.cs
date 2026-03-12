@@ -21,10 +21,8 @@ public class GroupMapping : IEntityTypeConfiguration<GroupModel>
         builder.MapMember(acc => acc.Type)
             .SetSerializer(new EnumSerializer<EntryType>(BsonType.String));
 
-        builder.UnmapProperty(group => group.Account);
+        builder.UnmapMember(group => group.Account);
         
         builder.SetIsRootClass(true);
-        
-        builder.SetDiscriminator(nameof(GroupModel));
     }
 }

@@ -15,15 +15,15 @@ public class UpdateGroupCommandValidator : AbstractValidator<UpdateGroupCommand>
 
         RuleFor(r => r.Request.Name)
             .NotEmpty()
-            .WithErrorCode(GroupValidationErrors.RequiredField.ErrorCode)
-            .WithMessage(GroupValidationErrors.RequiredField.ErrorMessage)
+                .WithErrorCode(GroupValidationErrors.RequiredField.ErrorCode)
+                .WithMessage(GroupValidationErrors.RequiredField.ErrorMessage)
             .MinimumLength(5)
-            .WithErrorCode(GroupValidationErrors.InvalidField.ErrorCode)
-            .WithMessage(GroupValidationErrors.InvalidField.ErrorMessage);
+                .WithErrorCode(GroupValidationErrors.InvalidField.ErrorCode)
+                .WithMessage(GroupValidationErrors.InvalidField.ErrorMessage);
         
         RuleFor(r => r.GroupId)
             .Must(groupId => groupRepository.Exists(groupId))
-            .WithErrorCode(GroupValidationErrors.GroupNotExists.ErrorCode)
-            .WithMessage(GroupValidationErrors.GroupNotExists.ErrorMessage);
+                .WithErrorCode(GroupValidationErrors.GroupNotExists.ErrorCode)
+                .WithMessage(GroupValidationErrors.GroupNotExists.ErrorMessage);
     }
 }

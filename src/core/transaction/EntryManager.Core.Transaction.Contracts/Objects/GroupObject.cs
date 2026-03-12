@@ -8,7 +8,9 @@ public class GroupObject
 
     public string Name { get; set; }
 
+    public string Description { get; set; }
+
     public EntryType Type { get; set; }
     
-    public string Account { get; set; }
+    public AccountObject Account { get; set; }
 }

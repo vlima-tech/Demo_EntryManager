@@ -30,9 +30,12 @@ public class CreateGroupCommandValidator : AbstractValidator<CreateGroupCommand>
                 .WithMessage(GroupValidationErrors.RequiredField.ErrorMessage)
             .MinimumLength(5)
                 .WithErrorCode(GroupValidationErrors.InvalidField.ErrorCode)
-                .WithMessage(GroupValidationErrors.InvalidField.ErrorMessage);
+                .WithMessage(GroupValidationErrors.InvalidField.ErrorMessage)
+            .Must(groupName => this._groupRepository.NotExists(groupName))
+                .WithErrorCode(GroupValidationErrors.GroupAlreadyExists.ErrorCode)
+                .WithMessage(GroupValidationErrors.GroupAlreadyExists.ErrorMessage);
 
-        RuleFor(c => c.Request.AccountName)
+        RuleFor(c => c.Request.AccountId)
             .NotEmpty()
                 .WithErrorCode(GroupValidationErrors.RequiredField.ErrorCode)
                 .WithMessage(GroupValidationErrors.RequiredField.ErrorMessage);
@@ -43,16 +46,16 @@ public class CreateGroupCommandValidator : AbstractValidator<CreateGroupCommand>
     
     private void ValidateAccount()
     {
-        RuleFor(c => c.Request.AccountName)
-            .Must(accName => this._accountRepository.Exists(accName))
+        RuleFor(c => c.Request.AccountId)
+            .Must(accId => this._accountRepository.Exists(accId))
                 .WithErrorCode(GroupValidationErrors.AccountNotExists.ErrorCode)
                 .WithMessage(GroupValidationErrors.AccountNotExists.ErrorMessage);
     }
     
     private void ValidateGroup()
     {
-        RuleFor(c => c.Request.AccountName)
-            .Must(groupName => this._groupRepository.NotExists(groupName))
+        RuleFor(c => c.Request.AccountId)
+            .Must(accId => this._groupRepository.NotExists(accId))
                 .WithErrorCode(GroupValidationErrors.GroupAlreadyExists.ErrorCode)
                 .WithMessage(GroupValidationErrors.GroupAlreadyExists.ErrorMessage);
     }

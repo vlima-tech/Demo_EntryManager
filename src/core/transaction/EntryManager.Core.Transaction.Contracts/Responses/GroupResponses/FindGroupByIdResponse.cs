@@ -2,7 +2,7 @@ using EntryManager.Core.Transaction.Contracts.Objects;
 
 namespace EntryManager.Core.Transaction.Contracts.Responses.GroupResponses;
 
-public class FindGroupByNameResponse : GroupObject
+public class FindGroupByIdResponse : GroupObject
 {
     
 }

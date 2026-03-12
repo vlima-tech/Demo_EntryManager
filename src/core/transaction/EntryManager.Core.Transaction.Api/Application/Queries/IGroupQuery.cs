@@ -12,10 +12,10 @@ public interface IGroupQuery
     Task<ListGroupResponse> ObtainsAllAsync(CancellationToken cancellationToken = default);
     
     /// <summary>
-    /// Asynchronously finds a group by name.
+    /// Retrieves a group by its identification key.
     /// </summary>
-    /// <param name="groupName">The group name.</param>
+    /// <param name="groupId">The group identification key.</param>
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>The model if found; otherwise, null.</returns>
-    Task<FindGroupByNameResponse?> FindByNameAsync(string groupName, CancellationToken cancellationToken = default);
+    Task<FindGroupByIdResponse?> ObtainsByIdAsync(Guid groupId, CancellationToken cancellationToken = default);
 }
