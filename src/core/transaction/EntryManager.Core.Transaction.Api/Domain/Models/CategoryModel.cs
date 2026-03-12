@@ -7,7 +7,7 @@ public class CategoryModel : BaseModel
 {
     public Guid GroupId { get; private set; }
     
-    public string Name { get; private set; }
+    public string Title { get; private set; }
     
     public EntryType EntryType { get; private set; }
 
@@ -16,23 +16,23 @@ public class CategoryModel : BaseModel
     public CategoryModel()
     { }
 
-    public CategoryModel(string name, GroupModel group)
+    public CategoryModel(string title, GroupModel group)
     {
-        this.Name = name;
+        this.Title = title;
         this.GroupId = group.Id;
         this.EntryType = group.Type;
         this.Group = group;
     }
     
-    public CategoryModel(Guid id, string name, GroupModel group) : this(name, group) => this.Id = id;
+    public CategoryModel(Guid id, string title, GroupModel group) : this(title, group) => this.Id = id;
 
-    public static CategoryModel Create(string name, GroupModel group) => new(name, group);
+    public static CategoryModel Create(string title, GroupModel group) => new(title, group);
     
-    public static CategoryModel Create(Guid id, string name, GroupModel group) => new(id, name, group);
+    public static CategoryModel Create(Guid id, string title, GroupModel group) => new(id, title, group);
     
-    public void ChangeName(string categoryName)
+    public void ChangeTitle(string title)
     {
-        if (!string.IsNullOrWhiteSpace(categoryName.Trim()))
-            this.Name = categoryName;
+        if (!string.IsNullOrWhiteSpace(title.Trim()))
+            this.Title = title;
     }
 }

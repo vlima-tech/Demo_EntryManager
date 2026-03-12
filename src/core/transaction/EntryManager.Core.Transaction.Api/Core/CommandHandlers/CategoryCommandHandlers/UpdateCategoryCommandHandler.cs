@@ -15,7 +15,7 @@ public class UpdateCategoryCommandHandler(IServiceProvider provider) : ICommandH
         
         var category = await this._categoryRepository.FindByIdAsync(command.CategoryId, cancellationToken);
         
-        category.ChangeName(request.Name);
+        category.ChangeTitle(request.Title);
         
         await this._categoryRepository.UpdateAsync(category, cancellationToken);
         

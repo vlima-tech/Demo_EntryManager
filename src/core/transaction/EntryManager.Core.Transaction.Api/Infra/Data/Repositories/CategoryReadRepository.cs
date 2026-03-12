@@ -21,7 +21,7 @@ public class CategoryReadRepository : BaseReadRepository<CategoryModel, Guid>, I
         var category = await base.FindByIdAsync(id, cancellationToken);
         var group = await this._groupRepository.FindByIdAsync(category.GroupId, cancellationToken);
         
-        return category is null ? null : new CategoryModel(category.Id, category.Name, group);
+        return category is null ? null : new CategoryModel(category.Id, category.Title, group);
     }
     
     public override async Task<IEnumerable<CategoryModel>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -35,7 +35,7 @@ public class CategoryReadRepository : BaseReadRepository<CategoryModel, Guid>, I
             .ToDictionary(a => a.Id);
         
         var finalCategories = categories.Select(category => accounts.TryGetValue(category.GroupId, out var group) 
-            ? new CategoryModel(category.Id, category.Name, group) 
+            ? new CategoryModel(category.Id, category.Title, group) 
             : category);
 
         return finalCategories.ToList();
@@ -48,7 +48,7 @@ public class CategoryReadRepository : BaseReadRepository<CategoryModel, Guid>, I
         var categoryObjects = result.Select(category => new ListCategoryResponse.CategoryObject
         {
             Id = category.Id,
-            Name = category.Name,
+            Name = category.Title,
             Group = category.Group.Name,
             Type = (Contracts.Enums.EntryType) category.Group.Type
         });

@@ -6,7 +6,7 @@ public class CategoryObject
 {
     public Guid CategoryId { get; set; }
     
-    public string Name { get; set; }
+    public string Title { get; set; }
     
     public EntryType EntryType { get; set; }
 

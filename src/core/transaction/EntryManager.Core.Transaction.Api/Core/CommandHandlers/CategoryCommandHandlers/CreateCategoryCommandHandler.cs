@@ -17,20 +17,25 @@ public class CreateCategoryCommandHandler(IServiceProvider provider) : ICommandH
         var request = command.Request;
         
         var group = await this._groupRepository.FindByIdAsync(request.GroupId, cancellationToken);
-        var category = new CategoryModel(request.Name, group);
+        var category = new CategoryModel(request.Title, group);
         
         await this._categoryRepository.CreateAsync(category, cancellationToken);
 
         return new CreateCategoryResponse
         {
             Id = category.Id,
-            Name = category.Name,
+            Name = category.Title,
             Group = new GroupObject
             {
                 GroupId = group.Id,
                 Name = group.Name,
                 Type = (Contracts.Enums.EntryType)group.Type,
-                Account = group.Account.Name
+                Account = new AccountObject
+                {
+                    AccountId = group.AccountId,
+                    Name = group.Account.Name,
+                    Status = (Contracts.Enums.AccountStatus)group.Account.Status
+                }
             }
         };
     }

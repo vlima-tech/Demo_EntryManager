@@ -13,7 +13,7 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
         RuleFor(r => r.Request)
             .NotNull();
 
-        RuleFor(r => r.Request.Name)
+        RuleFor(r => r.Request.Title)
             .NotEmpty()
                 .WithErrorCode(CategoryValidationErrors.RequiredField.ErrorCode)
                 .WithMessage(CategoryValidationErrors.RequiredField.ErrorMessage)
