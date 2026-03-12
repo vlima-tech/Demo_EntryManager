@@ -1,0 +1,23 @@
+[*.cs]
+# --- Severidade de Warnings ---
+# CS8618: Propriedades não inicializadas (Comum em EF/Records)
+dotnet_diagnostic.CS8600.severity = none
+dotnet_diagnostic.CS8602.severity = none
+dotnet_diagnostic.CS8603.severity = none
+dotnet_diagnostic.CS8618.severity = none
+dotnet_diagnostic.CS8625.severity = none
+
+# CS1591: Falta de comentários XML (Evita que o build reclame se você não comentar cada método)
+dotnet_diagnostic.CS1591.severity = none
+
+# --- Organização de Código ---
+# Forçar o uso de 'var' quando o tipo for óbvio (Ex: var x = new Rollup();)
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+
+# Organizar os Usings: Colocar o 'System' primeiro
+dotnet_separate_import_directive_groups = true
+dotnet_sort_system_directives_first = true
+
+# Espaçamento em métodos (estilo limpo)
+csharp_space_between_method_call_parameter_list_parentheses = false

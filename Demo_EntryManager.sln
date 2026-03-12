@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.dockerignore = .dockerignore
 		.gitignore = .gitignore
 		README.md = README.md
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{E6DB2E0A-BF8E-4D6F-85A7-BE38EF870A68}"
@@ -37,6 +38,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Shared.Data.Mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Shared.Domain.Abstractions", "src\shared\EntryManager.Shared.Domain.Abstractions\EntryManager.Shared.Domain.Abstractions.csproj", "{C68E4EA8-3771-4E3D-9D95-C5158089427F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "accrual", "accrual", "{2D118394-0E49-453F-A276-22D5CE7F5FF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Core.Accrual.Api", "src\core\accrual\EntryManager.Core.Accrual.Api\EntryManager.Core.Accrual.Api.csproj", "{F380C3BC-E00D-4B97-B961-0A44E054DBD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Core.Accrual.Contracts", "src\core\accrual\EntryManager.Core.Accrual.Contracts\EntryManager.Core.Accrual.Contracts.csproj", "{1C60968D-49CA-4093-B527-2F3310AE6247}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +62,9 @@ Global
 		{3CC21CA9-2C5E-47FA-B1F4-77191277BF3F} = {21AFE2ED-E773-4CB4-BE82-E4F53A674452}
 		{4C08F56A-8FC3-4B22-9A95-89A89A071998} = {21AFE2ED-E773-4CB4-BE82-E4F53A674452}
 		{C68E4EA8-3771-4E3D-9D95-C5158089427F} = {21AFE2ED-E773-4CB4-BE82-E4F53A674452}
+		{2D118394-0E49-453F-A276-22D5CE7F5FF3} = {E6DB2E0A-BF8E-4D6F-85A7-BE38EF870A68}
+		{F380C3BC-E00D-4B97-B961-0A44E054DBD3} = {2D118394-0E49-453F-A276-22D5CE7F5FF3}
+		{1C60968D-49CA-4093-B527-2F3310AE6247} = {2D118394-0E49-453F-A276-22D5CE7F5FF3}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B8A79461-959C-4ED5-91CC-1DF16F409AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -93,5 +103,13 @@ Global
 		{C68E4EA8-3771-4E3D-9D95-C5158089427F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C68E4EA8-3771-4E3D-9D95-C5158089427F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C68E4EA8-3771-4E3D-9D95-C5158089427F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F380C3BC-E00D-4B97-B961-0A44E054DBD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F380C3BC-E00D-4B97-B961-0A44E054DBD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F380C3BC-E00D-4B97-B961-0A44E054DBD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F380C3BC-E00D-4B97-B961-0A44E054DBD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C60968D-49CA-4093-B527-2F3310AE6247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C60968D-49CA-4093-B527-2F3310AE6247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C60968D-49CA-4093-B527-2F3310AE6247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C60968D-49CA-4093-B527-2F3310AE6247}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

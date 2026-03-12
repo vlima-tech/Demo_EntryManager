@@ -20,10 +20,10 @@
       - ./docker/volumes/kafka-zookeeper/data:/var/lib/zookeeper/data
       - ./docker/volumes/kafka-zookeeper/secrets:/etc/zookeeper/secrets
 
-  kafka-broker:
+  kafka-core:
     image: confluentinc/cp-kafka:latest
-    container_name: kafka-broker
-    hostname: kafka-broker
+    container_name: kafka-core
+    hostname: kafka-core
     user: "0:0" # 👈 executa como root
     depends_on:
       - kafka-zookeeper
@@ -36,38 +36,50 @@
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_ZOOKEEPER_CONNECT: kafka-zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONTROLLER:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENERS: PLAINTEXT://kafka-broker:29092,CONTROLLER://kafka-broker:29093,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-core:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://kafka-core:29092,CONTROLLER://kafka-core:29093,PLAINTEXT_HOST://0.0.0.0:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-broker:29093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-core:29093
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
-      - ./docker/volumes/kafka-broker/data:/var/lib/kafka/data
-      - ./docker/volumes/kafka-broker/secrets:/etc/kafka/secrets
+      - ./docker/volumes/kafka-core/data:/var/lib/kafka/data
+      - ./docker/volumes/kafka-core/secrets:/etc/kafka/secrets
    
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
+    hostname: kafka-ui
     restart: always
     depends_on:
-      - kafka-broker
+      - kafka-core
     ports:
       - "8080:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: kafka-local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-broker:29092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-core:29092
       KAFKA_CLUSTERS_0_ZOOKEEPER: kafka-zookeeper:2181
       DYNAMIC_CONFIG_ENABLED: 'true'
     volumes:
       - ./docker/volumes/kafka-ui:/etc/kafkaui/config
       - ./docker/volumes/kafka-ui:/var/log/kafkaui
         
-  mongodb:
+  mongo-core:
     image: mongo:latest
-    container_name: mongodb
+    container_name: mongo-core
+    hostname: mongo-core
     restart: always
     ports:
       - 27017:27017
     volumes:
-      - ./docker/volumes/mongo:/data/db
+      - ./docker/volumes/mongo-core:/data/db
+        
+  redis-core:
+    image: redis:8.6-alpine
+    container_name: redis-core
+    hostname: redis-core
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./docker/volumes/redis-core:/data
