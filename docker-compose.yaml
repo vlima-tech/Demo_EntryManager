@@ -1,9 +1,25 @@
 ﻿services:
-#  entrymanager-transaction-api:
-#    image: entrymanager-transaction-api:dev
-#    build:
-#      context: .
-#      dockerfile: src/transaction/EntryManager.Transaction.Api/Dockerfile
+  entrymanager-core-transaction-api:
+    container_name: entrymanager-core-transaction-api
+    build:
+      context: .
+      dockerfile: src/core/transaction/EntryManager.Core.Transaction.Api/Dockerfile
+    ports:
+      - 5104:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+  
+  entrymanager-core-accrual-api:
+    container_name: entrymanager-core-accrual-api
+    build:
+      context: .
+      dockerfile: src/core/accrual/EntryManager.Core.Accrual.Api/Dockerfile
+    depends_on:
+      - entrymanager-core-transaction-api
+    ports:
+      - 5105:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
   
   kafka-zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -11,7 +27,7 @@
     hostname: kafka-zookeeper
     user: "0:0" # 👈 executa como root
     ports:
-      - "2181:2181"
+      - 2181:2181
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -28,16 +44,16 @@
     depends_on:
       - kafka-zookeeper
     ports:
-      - "9092:9092"
-      - "29092:29092"
+      - 9092:9092
+      - 29092:29092
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_ZOOKEEPER_CONNECT: kafka-zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONTROLLER:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-core:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENERS: PLAINTEXT://kafka-core:29092,CONTROLLER://kafka-core:29093,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-core:29092,PLAINTEXT_HOST://kafka-core:9092
+      KAFKA_LISTENERS: PLAINTEXT://kafka-core:29092,CONTROLLER://kafka-core:29093,PLAINTEXT_HOST://kafka-core:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-core:29093
@@ -54,7 +70,7 @@
     depends_on:
       - kafka-core
     ports:
-      - "8080:8080"
+      - 8080:8080
     environment:
       KAFKA_CLUSTERS_0_NAME: kafka-local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-core:29092
@@ -73,6 +89,18 @@
       - 27017:27017
     volumes:
       - ./docker/volumes/mongo-core:/data/db
+      
+  mongo-ui:
+    image: mongo-express:latest
+    container_name: mongo-ui
+    restart: always
+    depends_on:
+      - mongo-core
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo-core # Nome do seu serviço mongo no compose
+      - ME_CONFIG_MONGODB_PORT=27017
         
   redis-core:
     image: redis:8.6-alpine
@@ -83,3 +111,13 @@
       - 6379:6379
     volumes:
       - ./docker/volumes/redis-core:/data
+    
+  redis-ui:
+    image: redis/redisinsight:latest
+    container_name: redis-ui
+    depends_on:
+      - redis-core
+    ports:
+      - 8001:8001
+    volumes:
+      - ./docker/volumes/redis-ui:/data

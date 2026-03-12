@@ -7,17 +7,17 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/transaction/EntryManager.Transaction.Api/EntryManager.Transaction.Api.csproj", "src/transaction/EntryManager.Transaction.Api/"]
-RUN dotnet restore "src/transaction/EntryManager.Transaction.Api/EntryManager.Transaction.Api.csproj"
+COPY ["src/core/transaction/EntryManager.Core.Transaction.Api/EntryManager.Core.Transaction.Api.csproj", "core/transaction/EntryManager.Core.Transaction.Api/"]
+RUN dotnet restore "core/transaction/EntryManager.Core.Transaction.Api/EntryManager.Core.Transaction.Api.csproj"
 COPY . .
-WORKDIR "/src/src/transaction/EntryManager.Transaction.Api"
-RUN dotnet build "./EntryManager.Transaction.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/src/core/transaction/EntryManager.Core.Transaction.Api"
+RUN dotnet build "./EntryManager.Core.Transaction.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./EntryManager.Transaction.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./EntryManager.Core.Transaction.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "EntryManager.Transaction.Api.dll"]
+ENTRYPOINT ["dotnet", "entrymanager-core-transaction-api.dll"]

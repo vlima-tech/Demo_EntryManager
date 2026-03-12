@@ -1,0 +1,481 @@
+{
+  "info": {
+    "_postman_id": "592ccfb7-8c27-4c43-a5d5-1bd64f97bea5",
+    "name": "entry-manager",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "15165173"
+  },
+  "item": [
+    {
+      "name": "core-transaction",
+      "item": [
+        {
+          "name": "Financial Account",
+          "item": [
+            {
+              "name": "Create Account",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"{{$randomJobArea}}\",\n    \"balance\": \"{{$randomInt}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/accounts",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "accounts"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Account",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremWords}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/accounts/{{account-id:valid}}",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "accounts",
+                    "{{account-id:valid}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List Accounts",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremWords}}\",\n    \"type\": \"{{group-type:expense}}\",\n    \"accountName\": \"Default\"\n}"
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/accounts",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "accounts"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Account Details",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremWords}}\",\n    \"type\": \"{{group-type:expense}}\",\n    \"accountName\": \"Default\"\n}"
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/accounts/{{account-id:valid}}/details",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "accounts",
+                    "{{account-id:valid}}",
+                    "details"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Financial Group",
+          "item": [
+            {
+              "name": "Create Group",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremWords}}\",\n    \"type\": \"{{group-type:expense}}\",\n    \"accountId\": \"{{account-id:valid}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/groups",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "groups"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List Groups",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremWords}}\",\n    \"type\": \"{{group-type:expense}}\",\n    \"accountName\": \"Default\"\n}"
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/groups",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "groups"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Group Details",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremWords}}\",\n    \"type\": \"{{group-type:expense}}\",\n    \"accountName\": \"Default\"\n}"
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/groups/{{group-id:valid}}/details",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "groups",
+                    "{{group-id:valid}}",
+                    "details"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Group",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremWords}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/groups/{{group-id:valid}}",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "groups",
+                    "{{group-id:valid}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Financial Category",
+          "item": [
+            {
+              "name": "Create Category",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"{{$randomProductName}}\",\n    \"groupId\": \"{{group-id:valid}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/categories",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Category",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"{{$randomProductName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/categories/{{category-id:valid}}",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "categories",
+                    "{{category-id:valid}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List Categories",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomLoremWords}}\",\n    \"type\": \"{{group-type:expense}}\",\n    \"accountName\": \"Default\"\n}"
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/categories",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "categories"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Transaction",
+          "item": [
+            {
+              "name": "Register Transaction",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "traceparent",
+                    "value": "00-1234567890abcdef1234567890abcdef-abcdef1234567890-01",
+                    "type": "text",
+                    "disabled": true
+                  },
+                  {
+                    "key": "x-correlation-id",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "x-idempotency-key",
+                    "value": "{{$guid}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"categoryId\": \"{{category-id:valid}}\",\n    \"title\": \"{{$randomCatchPhrase}}\",\n    \"value\": {{$randomInt}},\n    \"date\": \"{{$isoTimestamp}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{host-core-entrymanager-transaction}}/api/transactions",
+                  "host": [
+                    "{{host-core-entrymanager-transaction}}"
+                  ],
+                  "path": [
+                    "api",
+                    "transactions"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "core-accrual",
+      "item": [
+        {
+          "name": "Daily Consolidated Rollup",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{host-core-entrymanager-accrual}}/api/rollups",
+              "host": [
+                "{{host-core-entrymanager-accrual}}"
+              ],
+              "path": [
+                "api",
+                "rollups"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Consolidated Rollup",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{host-core-entrymanager-accrual}}/api/rollups/{{$isoTimestamp}}/reset",
+              "host": [
+                "{{host-core-entrymanager-accrual}}"
+              ],
+              "path": [
+                "api",
+                "rollups",
+                "{{$isoTimestamp}}",
+                "reset"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "account-id:valid",
+      "value": ""
+    },
+    {
+      "key": "account-id:invalid",
+      "value": ""
+    },
+    {
+      "key": "group-id:invalid",
+      "value": ""
+    },
+    {
+      "key": "group-id:valid",
+      "value": ""
+    },
+    {
+      "key": "group-name:default",
+      "value": ""
+    },
+    {
+      "key": "group-type:revenue",
+      "value": ""
+    },
+    {
+      "key": "group-type:expense",
+      "value": ""
+    },
+    {
+      "key": "category-id:valid",
+      "value": ""
+    },
+    {
+      "key": "category-id:invalid",
+      "value": ""
+    }
+  ]
+}
