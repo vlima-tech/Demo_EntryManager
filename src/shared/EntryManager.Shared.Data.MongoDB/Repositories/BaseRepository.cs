@@ -8,7 +8,7 @@ namespace EntryManager.Shared.Data.MongoDB.Repositories;
 
 public class BaseRepository<TModel, TKey> : IBaseRepository<TModel, TKey> where TModel : IdentifiedObject<TKey>
 {
-    private readonly IServiceBus ServiceBus;
+    protected readonly IServiceBus ServiceBus;
     protected IMongoCollection<TModel> Db { get; private set; }
     private IBaseReadRepository<TModel, TKey> _readRepository { get; set; }
 
