@@ -10,6 +10,6 @@ public class TransactionMapping : IEntityTypeConfiguration<TransactionModel>
     {
         builder.AutoMap();
         
-        builder.UnmapProperty(t => t.Category);
+        builder.UnmapMember(t => t.Category);
     }
 }
