@@ -36,6 +36,8 @@ internal static class DatabaseExtension
             services.AddScoped<ILedgerRepository, LedgerRepository>();
             services.AddScoped<ILedgerReadRepository, LedgerReadRepository>();
             
+            services.AddSingleton<IRollupRepository, RollupRepository>();
+            
             return services;
         }
     }
