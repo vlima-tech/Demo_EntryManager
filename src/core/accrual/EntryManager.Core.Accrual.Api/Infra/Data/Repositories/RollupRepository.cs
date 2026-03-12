@@ -57,4 +57,89 @@ public class RollupRepository(IServiceProvider provider) : IRollupRepository
         
         return Task.FromResult(true);
     }
+    
+    public async Task<Rollup> LoadAsync(DateTime rollupDay, CancellationToken cancellationToken = default)
+    {
+        var datePart = rollupDay.ToString("yyyyMMdd");
+        var rollup = new Rollup(rollupDay);
+    
+        var groupIds = await _redisDb.SetMembersAsync($"rollup:{datePart}:index:groups");
+
+        foreach (var groupId in groupIds)
+        {
+            var groupKey = $"rollup:{datePart}:group:{groupId}";
+        
+            var groupData = await _redisDb.HashGetAllAsync(groupKey);
+            
+            if (groupData.Length == 0) continue;
+
+            var groupDict = groupData.ToDictionary();
+            
+            var rollupGroup = new RollupGroup(
+                Guid.Parse(groupDict[nameof(RollupGroup.GroupId)].ToString()),
+                groupDict[nameof(RollupGroup.Name)],
+                (long)groupDict[nameof(RollupGroup.Balance)]
+            );
+
+            var categoryIds = await _redisDb.SetMembersAsync($"{groupKey}:index:categories");
+            var categoryList = new List<RollupCategory>();
+
+            foreach (var categoryId in categoryIds)
+            {
+                var categoryKey = $"{groupKey}:category:{categoryId}";
+            
+                var catData = await _redisDb.HashGetAllAsync(categoryKey);
+                if (catData.Length == 0) continue;
+
+                var catDict = catData.ToDictionary();
+                categoryList.Add(new RollupCategory(
+                    Guid.Parse(catDict[nameof(RollupCategory.CategoryId)].ToString()),
+                    catDict[nameof(RollupCategory.Title)],
+                    (long)catDict[nameof(RollupCategory.Balance)]
+                ));
+                
+                if(cancellationToken.IsCancellationRequested)
+                    break;
+            }
+
+            rollup.Add(rollupGroup, categoryList);
+            
+            if(cancellationToken.IsCancellationRequested)
+                break;
+        }
+
+        return rollup;
+    }
+
+    public async Task<bool> RemoveAsync(DateTime rollupDay, CancellationToken cancellationToken = default)
+    {
+        var datePart = rollupDay.ToString("yyyyMMdd");
+        var groupIndexKey = $"rollup:{datePart}:index:groups";
+    
+        var groupIds = await _redisDb.SetMembersAsync(groupIndexKey);
+    
+        var batch = _redisDb.CreateBatch();
+        var tasks = new List<Task>();
+
+        foreach (var groupId in groupIds)
+        {
+            var groupKey = $"rollup:{datePart}:group:{groupId}";
+            var categoryIndexKey = $"{groupKey}:index:categories";
+
+            var categoryIds = await _redisDb.SetMembersAsync(categoryIndexKey);
+
+            foreach (var categoryId in categoryIds)
+                tasks.Add(batch.KeyDeleteAsync($"{groupKey}:category:{categoryId}"));
+            
+            tasks.Add(batch.KeyDeleteAsync(groupKey));
+            tasks.Add(batch.KeyDeleteAsync(categoryIndexKey));
+        }
+
+        tasks.Add(batch.KeyDeleteAsync(groupIndexKey));
+
+        batch.Execute();
+        await Task.WhenAll(tasks);
+        
+        return true;
+    }
 }
