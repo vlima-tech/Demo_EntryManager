@@ -28,18 +28,11 @@ namespace EntryManager.Shared.Bus.Kafka
             
             var producer = this._producerProvider.GetProducer<IDistributedMessage>(topicAddress);
 
-            /*
-            await producer.Produce(notification, Pipe.Execute<SendContext<DistributedMessageEvent>>(context =>
-            {
-                context.CorrelationId = Guid.TryParse(notification.CorrelationId, out var guid) ? guid : Guid.Empty;
-            }));
-            */
-            
             await producer.Produce(notification, cancellationToken);
         }
 
         private static string ResolveTopicName(string appName, Type type)
-            => _producerNameCache.GetOrAdd(type, t => TopicNameConventionHelpper.FormatTopicName(appName, type));
+            => _producerNameCache.GetOrAdd(type, t => TopicNameConventionHelpper.Resolve(appName, type).TopicName);
         
         public void Dispose()
         {
