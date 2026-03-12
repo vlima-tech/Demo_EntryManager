@@ -189,17 +189,17 @@ internal class KafkaBuilder(IServiceCollection services, IKafkaOptionsBuilder op
                     {
                         var appName = _options.ApplicationName;
 
-                        var topicName = TopicNameConventionHelpper.FormatTopicName(appName, consumerType);
+                        var topicResolution = TopicNameConventionHelpper.Resolve(appName, consumerType);
                         
                         var consumerConfig = new ConsumerConfig()
                         {
-                            GroupId = $"{topicName}-group",
+                            GroupId = $"consumer-{appName}-{topicResolution.ContractName}-group",
                             EnableAutoCommit = true,
                             AutoCommitIntervalMs = 2500,
                             EnableAutoOffsetStore = true
                         };
                         
-                        cfg.TopicEndpoint<DistributedMessageEvent>(topicName: topicName, consumerConfig, configure: e =>
+                        cfg.TopicEndpoint<DistributedMessageEvent>(topicName: topicResolution.TopicName, consumerConfig, configure: e =>
                         {
                             e.SerializerContentType = new ContentType("application/vnd.masstransit+json");
                             e.DefaultContentType = new ContentType("application/vnd.masstransit+json");

@@ -10,11 +10,10 @@
       <ProjectReference Include="..\EntryManager.Shared.Bus.Abstractions\EntryManager.Shared.Bus.Abstractions.csproj" />
       <ProjectReference Include="..\EntryManager.Shared.Interop\EntryManager.Shared.Interop.csproj" />
     </ItemGroup>
-
+    
     <ItemGroup>
-      <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-        <HintPath>..\..\..\..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\10.0.3\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-      </Reference>
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
     </ItemGroup>
 
 </Project>

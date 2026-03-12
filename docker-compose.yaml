@@ -62,3 +62,12 @@
     volumes:
       - ./docker/volumes/kafka-ui:/etc/kafkaui/config
       - ./docker/volumes/kafka-ui:/var/log/kafkaui
+        
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./docker/volumes/mongo:/data/db

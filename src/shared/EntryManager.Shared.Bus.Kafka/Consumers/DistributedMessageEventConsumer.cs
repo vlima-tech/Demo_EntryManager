@@ -14,6 +14,7 @@ public class DistributedMessageEventConsumer(IServiceProvider provider) : IConsu
     {
         var message = context.Message;
         
+        // TODO: Fix correlation key serialization. Check if NewtonsoftJson requires a custom converter for IHeaderDictionary.
         this._correlation.PropagateContext(message);
 
         if (message.Data.ContractType == ContractType.Event)
