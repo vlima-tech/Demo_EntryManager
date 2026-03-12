@@ -23,7 +23,7 @@ public class AccountReadRepository : BaseReadRepository<AccountModel, Guid>, IAc
         
         var result = accounts.Select(item => new AccountObject()
         {
-            Id = item.Id,
+            AccountId = item.Id,
             Name = item.Name,
             Balance = item.Balance,
             Status = (AccountStatus)item.Status
@@ -59,17 +59,19 @@ public class AccountReadRepository : BaseReadRepository<AccountModel, Guid>, IAc
 
         return query.FirstOrDefault() is not null;
     }
+    
+    public bool NotExists(string accountName) => !this.Exists(accountName);
 
-    async Task<FindAccountByNameResponse?> IAccountQuery.FindByNameAsync(string accountName, CancellationToken cancellationToken)
+    async Task<FindAccountByIdResponse?> IAccountQuery.FindByIdAsync(Guid accountId, CancellationToken cancellationToken)
     {
-        var account = await this.FindByNameAsync(accountName, cancellationToken);
+        var account = await base.FindByIdAsync(accountId, cancellationToken);
 
         if (account is null)
             return null;
 
-        return new FindAccountByNameResponse
+        return new FindAccountByIdResponse
         {
-            Id = account.Id,
+            AccountId = account.Id,
             Name = account.Name,
             Balance = account.Balance,
             Status = (AccountStatus)account.Status

@@ -19,4 +19,11 @@ public interface IAccountReadRepository : IBaseReadRepository<AccountModel, Guid
     /// <param name="accountName">The identification account name.</param>
     /// <returns>True if the model exists; otherwise, false.</returns>
     bool Exists(string accountName);
+    
+    /// <summary>
+    /// Checks if a model not exists by its identification account name.
+    /// </summary>
+    /// <param name="accountName">The identification account name.</param>
+    /// <returns>True if the model not exists; otherwise, false.</returns>
+    bool NotExists(string accountName);
 }

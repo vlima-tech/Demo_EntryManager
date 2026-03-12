@@ -1,14 +1,12 @@
 using EntryManager.Core.Transaction.Contracts.Enums;
 
-namespace EntryManager.Core.Transaction.Contracts.Objects;
+namespace EntryManager.Core.Transaction.Contracts.Responses.AccountResponses;
 
-public class AccountObject
+public class CreateAccountResponse
 {
     public Guid AccountId { get; set; }
-    
+
     public string Name { get; set; }
-    
-    public int Balance { get; set; }
 
     public AccountStatus Status { get; set; }
 }

@@ -20,4 +20,6 @@ public class AccountRepository : BaseRepository<AccountModel, Guid>, IAccountRep
         => this._readRepository.FindByNameAsync(accountName, cancellationToken);
 
     public bool Exists(string accountName) => this._readRepository.Exists(accountName);
+    
+    public bool NotExists(string accountName) => this._readRepository.NotExists(accountName);
 }

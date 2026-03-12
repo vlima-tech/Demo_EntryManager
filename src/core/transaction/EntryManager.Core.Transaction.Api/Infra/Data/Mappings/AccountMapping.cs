@@ -19,7 +19,5 @@ public class AccountMapping : IEntityTypeConfiguration<AccountModel>
             .SetSerializer(new EnumSerializer<AccountStatus>(BsonType.String));
         
         builder.SetIgnoreExtraElements(true);
-        
-        builder.SetDiscriminator(nameof(AccountModel));
     }
 }

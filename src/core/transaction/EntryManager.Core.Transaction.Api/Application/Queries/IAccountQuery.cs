@@ -1,4 +1,3 @@
-using EntryManager.Core.Transaction.Api.Domain.Models;
 using EntryManager.Core.Transaction.Contracts.Responses.AccountResponses;
 
 namespace EntryManager.Core.Transaction.Api.Application.Queries;
@@ -15,8 +14,8 @@ public interface IAccountQuery
     /// <summary>
     /// Asynchronously finds a account by name.
     /// </summary>
-    /// <param name="accountName">The account name.</param>
+    /// <param name="accountId">The account name.</param>
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>The model if found; otherwise, null.</returns>
-    Task<FindAccountByNameResponse?> FindByNameAsync(string accountName, CancellationToken cancellationToken = default);
+    Task<FindAccountByIdResponse?> FindByIdAsync(Guid accountId, CancellationToken cancellationToken = default);
 }

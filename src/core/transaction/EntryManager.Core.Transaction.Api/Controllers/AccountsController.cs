@@ -12,6 +12,26 @@ namespace EntryManager.Core.Transaction.Api.Controllers;
 public class AccountsController(IServiceProvider provider) : InternalControllerBase(provider)
 {
     private readonly IAccountQuery _query = provider.GetRequiredService<IAccountQuery>();
+
+    [HttpPost]
+    public async Task<IActionResult> CreateAsync(CreateAccountRequest request, CancellationToken cancellationToken)
+    {
+        base.PropagateContext();
+        
+        var result = await this.ServiceBus.SendAsync(new CreateAccountCommand(request), cancellationToken);
+        
+        return await this.ResponseAsync(result);
+    }
+    
+    [HttpPut("{accountId:guid}")]
+    public async Task<IActionResult> ChangeAsync(Guid accountId, [FromBody] UpdateAccountRequest request, CancellationToken cancellationToken)
+    {
+        base.PropagateContext();
+        
+        var result = await this.ServiceBus.SendAsync(new UpdateAccountCommand(accountId, request), cancellationToken);
+        
+        return await this.ResponseAsync(result);
+    }
     
     [HttpGet]
     public async Task<IActionResult> ListAsync(CancellationToken cancellationToken)
@@ -21,21 +41,13 @@ public class AccountsController(IServiceProvider provider) : InternalControllerB
         return await this.ResponseAsync(result);
     }
     
-    [HttpGet("{accountName}/details")]
-    public async Task<IActionResult> FindByNameAsync(string accountName, CancellationToken cancellationToken)
+    [HttpGet("{accountId:guid}/details")]
+    public async Task<IActionResult> FindByIdAsync(Guid accountId, CancellationToken cancellationToken)
     {
-        var result = await this._query.FindByNameAsync(accountName, cancellationToken);
+        var result = await this._query.FindByIdAsync(accountId, cancellationToken);
         
         var statusCode = result is null ? HttpStatusCode.NotFound : HttpStatusCode.OK;
         
         return await this.ResponseAsync(statusCode, result);
-    }
-    
-    [HttpPut("{accountId:guid}")]
-    public async Task<IActionResult> ChangeAsync(Guid accountId, [FromBody] UpdateAccountRequest request, CancellationToken cancellationToken)
-    {
-        var result = await this.ServiceBus.SendAsync(new UpdateAccountCommand(accountId, request), cancellationToken);
-        
-        return await this.ResponseAsync(result);
     }
 }
