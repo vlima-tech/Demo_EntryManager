@@ -50,6 +50,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{C31B6E25-2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryManager.Shared.Bus.Core.Tests", "tests\shared\EntryManager.Shared.Bus.Core.Tests\EntryManager.Shared.Bus.Core.Tests.csproj", "{014D8552-063C-4056-B57F-7EF12B09D1B8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{48CD99DB-73F6-4E86-AA9A-4B15C92ABF09}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ADRs", "ADRs", "{5DDB7491-9FD4-4176-BC40-116760271BCD}"
+	ProjectSection(SolutionItems) = preProject
+		docs\adrs\adr-001.md = docs\adrs\adr-001.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blueprints", "Blueprints", "{1F19308F-7745-4D4B-BAAD-FCAD5B6BDF14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +83,8 @@ Global
 		{586E10C1-4586-43AC-B128-201557B8E92A} = {343B4908-3FCA-4D57-8E20-7DA4C4F05F98}
 		{C31B6E25-2679-4F5C-8945-414BB979DCF4} = {343B4908-3FCA-4D57-8E20-7DA4C4F05F98}
 		{014D8552-063C-4056-B57F-7EF12B09D1B8} = {586E10C1-4586-43AC-B128-201557B8E92A}
+		{5DDB7491-9FD4-4176-BC40-116760271BCD} = {48CD99DB-73F6-4E86-AA9A-4B15C92ABF09}
+		{1F19308F-7745-4D4B-BAAD-FCAD5B6BDF14} = {48CD99DB-73F6-4E86-AA9A-4B15C92ABF09}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B8A79461-959C-4ED5-91CC-1DF16F409AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

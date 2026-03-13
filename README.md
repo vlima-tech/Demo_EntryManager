@@ -12,8 +12,10 @@
 
 -   [⚠️ Débitos Técnicos e Roadmap](#debitos-tecnicos-roadmap)
 
+-   [🗺️ DDocumentação Técnica](#documentacao-tecnica)
+
 ----------
-## 🛠️ Como Executar o Projeto (Quick Start)
+# 🛠️ Como Executar o Projeto (Quick Start)
 
 A forma mais rápida e recomendada de rodar o ecossistema completo (APIs, Redis e Kafka) é utilizando o **Docker**. Com apenas alguns comandos, todo o ambiente de mensageria e cache será configurado automaticamente.
 
@@ -60,7 +62,7 @@ Após o log do console estabilizar, você poderá acessar as APIs nos seguintes 
 -   **Accrual API:** `http://localhost:5106/swagger`
 
 ----------
-## 🧪 Fluxo de Teste Sugerido
+# 🧪 Fluxo de Teste Sugerido
 
 Para facilitar os testes, o projeto inclui uma **Postman Collection** e um **Environment** pré-configurados.
 
@@ -97,7 +99,7 @@ Para que os serviços funcionem corretamente, os registros iniciais devem ser cr
 
 ----------
 
-## ⚡ Desafio de Performance (Stress Test)
+# ⚡ Desafio de Performance (Stress Test)
 
 O motor de processamento foi desenhado para ser extremamente leve e resiliente. Gostaria de encorajar você a testar os limites da solução:
 
@@ -110,7 +112,7 @@ O motor de processamento foi desenhado para ser extremamente leve e resiliente. 
 **Flexibilidade de Dados:** Uma vez que você possua uma base de dados inicial, terá total liberdade para alternar entre os IDs existentes e criar novas combinações. O rigor inicial serve apenas para garantir a integridade referencial e o correto "aquecimento" do cache no Redis.
 
 
-## 🔍 Validação e Monitoramento dos Dados
+# 🔍 Validação e Monitoramento dos Dados
 
 Para auxiliar na depuração e garantir que os eventos e registros estão sendo processados corretamente, o ambiente Docker já inclui ferramentas de interface visual (GUI) pré-configuradas.
 
@@ -142,7 +144,7 @@ O **Redis Insight** é a interface oficial para visualizar os dados em memória.
 
 
 ----------
-## 🛑 Parando o Ambiente
+# 🛑 Parando o Ambiente
 
 Para encerrar os serviços e liberar memória, use `Ctrl + C` no terminal onde o Docker está rodando ou execute:
 
@@ -154,7 +156,7 @@ docker compose down
 ```
 
 ----------
-## ⚠️ Débitos Técnicos & Roadmap
+# ⚠️ Débitos Técnicos & Roadmap
 
 Este projeto é um MVP (Mínimo Produto Viável) focado na engine de processamento atômico de Rollups. Como tal, possui algumas limitações conhecidas que estão no radar para futuras evoluções:
 
@@ -185,3 +187,10 @@ Para garantir a melhor experiência de teste:
 2.  Valide as listagens e detalhes dessas entidades.
 
 3.  Só então inicie o envio de **Transactions** para observar o comportamento do motor de cálculo.
+
+
+# Documentação Técnica
+
+### 🗺️ Desenho da Solução
+Você pode visualizar o diagrama interativo da arquitetura através do link abaixo:
+👉 **[Diagrama da Solução no Excalidraw](https://excalidraw.com/#json=JCnXmxfuYY8-euaBDYAMV,edVncsK0Qwtx64JDXrkb-g)**
