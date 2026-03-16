@@ -57,9 +57,9 @@ docker compose up --build
 
 Após o log do console estabilizar, você poderá acessar as APIs nos seguintes endereços:
 
--   **Transaction API:** `http://localhost:5105/swagger`
+-   **Transaction API:** `http://localhost:5104/swagger`
 
--   **Accrual API:** `http://localhost:5106/swagger`
+-   **Accrual API:** `http://localhost:5105/swagger`
 
 ----------
 # 🧪 Fluxo de Teste Sugerido
@@ -190,6 +190,29 @@ Para garantir a melhor experiência de teste:
 
 
 # Documentação Técnica
+
+Este diretório centraliza a modelagem técnica do sistema, estruturada para garantir alta coesão e independência entre os serviços financeiros através de Domain-Driven Design (DDD).
+
+## Mapa da Jornada (User Story Map)
+O User Story Map abaixo descreve a experiência completa do usuário, desde a abertura de contas até a gestão de grupos e o fechamento de períodos financeiros. Este artefato serve como guia para a priorização de todas as funcionalidades dos serviços.
+
+
+## Core Transaction
+Responsável pela imutabilidade e persistência de cada evento financeiro.
+
+### Bounded Context Canvas 
+Define as fronteiras do motor de transações e sua linguagem ubíqua.
+
+![./docs/images/core-transaction/bc-canvas.png](./docs/images/core-transaction/bc-canvas.png)
+
+### Aggregate Model Canvas
+
+Detalha a entidade Transaction, suas invariantes e comandos de confirmação/cancelamento.
+
+![./docs/images/core-transaction/bc-canvas.png](./docs/images/core-transaction/aggregate-canvas-account.png)
+
+Foco: Imutabilidade e Auditoria.
+
 
 ### 🗺️ Desenho da Solução
 Você pode visualizar o diagrama interativo da arquitetura através do link abaixo:
