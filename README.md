@@ -1,23 +1,24 @@
 ## 📖 Índice
 
--   [🚀 Get Started]((#-como-executar-o-projeto-quick-start))
+-   [🚀 Get Started](#-como-executar-o-projeto-quick-start)
 
--   [📋 Fluxo de Teste Sugerido](#fluxo-de-teste-sugerido)
+-   [📋 Fluxo de Teste Sugerido](#-fluxo-de-teste-sugerido)
 
--   [⚡ Desafio de Performance](#desafio-de-performance-stress-test)
+-   [⚡ Desafio de Performance](#-desafio-de-performance-stress-test)
 
--   [🔍 Validação e Monitoramento](#validacao-e-monitoramento-dos-dados)
+-   [🔍 Validação e Monitoramento](#-validacao-e-monitoramento-dos-dados)
 
--   [📚 Parando o Ambiente](#parando-o-ambiente)
+-   [📚 Parando o Ambiente](#-parando-o-ambiente)
 
--   [⚠️ Débitos Técnicos e Roadmap](#debitos-tecnicos-roadmap)
+-   [⚠️ Débitos Técnicos e Roadmap](#-debitos-tecnicos-e-roadmap)
 
--   [🗺️ DDocumentação Técnica](#documentacao-tecnica)
+-   [🗺️ Documentação Técnica](#documentacao-tecnica)
 
 ----------
 # 🛠️ Como Executar o Projeto (Quick Start)
 
-A forma mais rápida e recomendada de rodar o ecossistema completo (APIs, Redis e Kafka) é utilizando o **Docker**. Com apenas alguns comandos, todo o ambiente de mensageria e cache será configurado automaticamente.
+A forma mais rápida e recomendada de rodar o ecossistema completo (APIs, Redis e Kafka) é utilizando o **Docker**. 
+Com apenas alguns comandos, todo o ambiente de mensageria e cache será configurado automaticamente.
 
 
 ## 1. Pré-requisitos
@@ -80,9 +81,11 @@ Para facilitar os testes, o projeto inclui uma **Postman Collection** e um **Env
 
 ### 2. Fluxo de Execução Obrigatório (Primeira Carga)
 
-Para que os serviços funcionem corretamente, os registros iniciais devem ser criados seguindo a hierarquia de dependências do domínio. A Collection do Postman já está organizada de cima para baixo para facilitar este processo.
+Para que os serviços funcionem corretamente, os registros iniciais devem ser criados seguindo a hierarquia de dependências do domínio. 
+A Collection do Postman já está organizada de cima para baixo para facilitar este processo.
 
-> [!IMPORTANT] **Siga a ordem estrita abaixo na primeira execução:** > O ID gerado em uma requisição é necessário para compor o relacionamento da próxima.
+> [!IMPORTANT] **Siga a ordem estrita abaixo na primeira execução:** > O ID gerado em uma requisição é necessário para 
+compor o relacionamento da próxima.
 
 1.  **core-transaction/Financial Account (`POST`):** Cria a conta base. Copie o `id` retornado.
 
@@ -101,46 +104,60 @@ Para que os serviços funcionem corretamente, os registros iniciais devem ser cr
 
 # ⚡ Desafio de Performance (Stress Test)
 
-O motor de processamento foi desenhado para ser extremamente leve e resiliente. Gostaria de encorajar você a testar os limites da solução:
+O motor de processamento foi desenhado para ser extremamente leve e resiliente. Gostaria de encorajar você a testar os 
+limites da solução:
 
--   **O Teste Recomendado:** Execute um teste de carga no endpoint **Daily Consolidated Rollup** com **50 reqs/s**. Graças ao cache otimizado no Redis, a resposta deve ser quase instantânea.
+-   **O Teste Recomendado:** Execute um teste de carga no endpoint **Daily Consolidated Rollup** com **50 reqs/s**. 
+Graças ao cache otimizado no Redis, a resposta deve ser quase instantânea.
 
--   **O Desafio:** Tente estender esse teste para os demais endpoints (Criação e Listagem). Embora eles não possuam cache (leitura/escrita direta no MongoDB e disparo de eventos Kafka), a execução foi otimizada para ser surpreendentemente rápida.
+-   **O Desafio:** Tente estender esse teste para os demais endpoints (Criação e Listagem). 
+Embora eles não possuam cache (leitura/escrita direta no MongoDB e disparo de eventos Kafka), 
+a execução foi otimizada para ser surpreendentemente rápida.
 
-**Se você realizar esses testes, adoraria receber o seu feedback!** O comportamento do sistema sob carga, mesmo em fluxos que não possuem cache, é um caso de uso que superou as expectativas iniciais de performance.
+**Se você realizar esses testes, adoraria receber o seu feedback!** O comportamento do sistema sob carga, 
+mesmo em fluxos que não possuem cache, é um caso de uso que superou as expectativas iniciais de performance.
 
-**Flexibilidade de Dados:** Uma vez que você possua uma base de dados inicial, terá total liberdade para alternar entre os IDs existentes e criar novas combinações. O rigor inicial serve apenas para garantir a integridade referencial e o correto "aquecimento" do cache no Redis.
+**Flexibilidade de Dados:** Uma vez que você possua uma base de dados inicial, terá total liberdade para alternar entre 
+os IDs existentes e criar novas combinações. O rigor inicial serve apenas para garantir a integridade referencial e 
+o correto "aquecimento" do cache no Redis.
 
 
 # 🔍 Validação e Monitoramento dos Dados
 
-Para auxiliar na depuração e garantir que os eventos e registros estão sendo processados corretamente, o ambiente Docker já inclui ferramentas de interface visual (GUI) pré-configuradas.
+Para auxiliar na depuração e garantir que os eventos e registros estão sendo processados corretamente, 
+o ambiente Docker já inclui ferramentas de interface visual (GUI) pré-configuradas.
 
 ### 1. Eventos em Tempo Real (Kafka UI)
 
-O **Kafka UI** permite monitorar o fluxo de mensagens entre as APIs. É ideal para validar se os eventos `AccountWasCreated` e  `TransactionWasCreated` foram disparados com sucesso.
+O **Kafka UI** permite monitorar o fluxo de mensagens entre as APIs. É ideal para validar se os eventos 
+`AccountWasCreated` e`TransactionWasCreated` foram disparados com sucesso.
 
 -   **Acesso:** `http://localhost:8080`
 
--   **O que observar:** Verifique o tópico de transações e visualize o conteúdo (payload) das mensagens conforme você executa as requisições no Postman.
+-   **O que observar:** Verifique o tópico de transações e visualize o conteúdo (payload) das mensagens conforme você 
+executa as requisições no Postman.
 
 
 ### 2. Persistência de Dados (Mongo Express)
 
-O **Mongo Express** é uma interface leve para inspecionar o banco de dados NoSQL onde as transações e entidades são armazenadas de forma definitiva.
+O **Mongo Express** é uma interface leve para inspecionar o banco de dados NoSQL onde as transações e entidades são 
+armazenadas de forma definitiva.
 
 -   **Acesso:** `http://localhost:8081`
 
--   **O que observar:** Navegue pelas collections de `Accounts`, `Groups`, `Categories` e `Transactions` para garantir que a persistência seguiu a hierarquia correta.
+-   **O que observar:** Navegue pelas collections de `Accounts`, `Groups`, `Categories` e `Transactions` para 
+garantir que a persistência seguiu a hierarquia correta.
 
 
 ### 3. Cache e Performance (Redis Insight)
 
-O **Redis Insight** é a interface oficial para visualizar os dados em memória. O serviço Accrual é o motor de cálculo e utiliza o Redis para garantir performance e atomicidade, esta ferramenta é essencial para validar o estado do cache.
+O **Redis Insight** é a interface oficial para visualizar os dados em memória. O serviço Accrual é o motor de cálculo e 
+utiliza o Redis para garantir performance e atomicidade, esta ferramenta é essencial para validar o estado do cache.
 
 -   **Acesso:** `http://localhost:8001`
 
--   **O que observar:** Veja o motor de Rollup em ação! Inspecione os hashes diários e os índices que o sistema cria dinamicamente para cada grupo e categoria.
+-   **O que observar:** Veja o motor de Rollup em ação! Inspecione os hashes diários e os índices que o sistema cria 
+dinamicamente para cada grupo e categoria.
 
 
 ----------
@@ -156,9 +173,10 @@ docker compose down
 ```
 
 ----------
-# ⚠️ Débitos Técnicos & Roadmap
+# ⚠️ Débitos Técnicos e Roadmap
 
-Este projeto é um MVP (Mínimo Produto Viável) focado na engine de processamento atômico de Rollups. Como tal, possui algumas limitações conhecidas que estão no radar para futuras evoluções:
+Este projeto é um MVP (Mínimo Produto Viável) focado na engine de processamento atômico de Rollups. Como tal, 
+possui algumas limitações conhecidas que estão no radar para futuras evoluções:
 
 ### 1. Sincronização de Dados
 
@@ -166,16 +184,20 @@ Este projeto é um MVP (Mínimo Produto Viável) focado na engine de processamen
 
 -   **Gatilhos de Sincronia:** * **Contas:** Sincronizadas apenas no momento da criação.
 
-    -   **Grupos e Categorias:** Atualmente, são refletidos no motor de Accrual apenas quando a primeira transação vinculada a eles é processada.
+    -   **Grupos e Categorias:** Atualmente, são refletidos no motor de Accrual apenas quando a primeira transação 
+vinculada a eles é processada.
 
--   **Updates Pendentes:** Alterações em nomes de categorias, grupos ou configurações de conta realizadas no `Core Transaction` ainda não são propagadas automaticamente para o motor de `Accrual`.
+-   **Updates Pendentes:** Alterações em nomes de categorias, grupos ou configurações de conta realizadas no 
+`Core Transaction` ainda não são propagadas automaticamente para o motor de `Accrual`.
 
 
 ### 2. Motor de Consolidação (Rollup)
 
--   **Atualização Dinâmica:** Atualmente, o consolidado diário é gerado com base no estado do banco de dados no momento da **primeira transação do dia** recebida pelo Accrual.
+-   **Atualização Dinâmica:** Atualmente, o consolidado diário é gerado com base no estado do banco de dados no 
+momento da **primeira transação do dia** recebida pelo Accrual.
 
--   **Reidratação de Cache:** Caso novas transações sejam geradas retroativamente ou em massa via banco, é necessário executar o endpoint de **Reset de Rollup** para forçar a recarga dos dados do MongoDB para o Redis.
+-   **Reidratação de Cache:** Caso novas transações sejam geradas retroativamente ou em massa via banco, 
+é necessário executar o endpoint de **Reset de Rollup** para forçar a recarga dos dados do MongoDB para o Redis.
 
 
 ### 3. Recomendações de Uso
@@ -191,25 +213,54 @@ Para garantir a melhor experiência de teste:
 
 # Documentação Técnica
 
-Este diretório centraliza a modelagem técnica do sistema, estruturada para garantir alta coesão e independência entre os serviços financeiros através de Domain-Driven Design (DDD).
+Este diretório centraliza a modelagem técnica do sistema, estruturada para garantir alta coesão e independência entre 
+os serviços financeiros através de Domain-Driven Design (DDD).
 
 ## Mapa da Jornada (User Story Map)
-O User Story Map abaixo descreve a experiência completa do usuário, desde a abertura de contas até a gestão de grupos e o fechamento de períodos financeiros. Este artefato serve como guia para a priorização de todas as funcionalidades dos serviços.
-
+O User Story Map abaixo descreve a experiência completa do usuário, desde a abertura de contas até a gestão de grupos e 
+o fechamento de períodos financeiros. Este artefato serve como guia para a priorização de todas as funcionalidades dos serviços.
 
 ## Core Transaction
 Responsável pela imutabilidade e persistência de cada evento financeiro.
 
-### Bounded Context Canvas 
-Define as fronteiras do motor de transações e sua linguagem ubíqua.
+### Bounded Context Canvas
+O Bounded Context Canvas é uma ferramenta estratégica de design tático utilizada para delimitar as fronteiras de 
+responsabilidade do serviço. Ele assegura que a Linguagem Ubíqua (termos comuns entre negócio e tecnologia) 
+seja aplicada de forma consistente, evitando que conceitos de outros domínios poluam a lógica interna.
+
+O artefato mapeia desde as interfaces públicas (APIs e Comandos) até as dependências externas, 
+garantindo que o design atenda aos requisitos de alta consistência.
+
+Para mais detalhes sobre o conceito de Bounded Context, 
+consulte o [Eric Evans’ DDD Reference](https://domainlanguage.com/ddd/reference) ou 
+[Martin Fowler’s article](https://martinfowler.com/bliki/BoundedContext.html).
 
 ![./docs/images/core-transaction/bc-canvas.png](./docs/images/core-transaction/bc-canvas.png)
 
 ### Aggregate Model Canvas
 
-Detalha a entidade Transaction, suas invariantes e comandos de confirmação/cancelamento.
+O Aggregate Model Canvas é uma ferramenta de modelagem utilizada no design tático para definir os limites de 
+consistência do domínio. Um Agregado, conforme descrito originalmente por Eric Evans, 
+é um gráfico de objetos que funciona como uma unidade de transação e aplicação de regras de negócio.
+
+O design preciso dessas fronteiras impacta diretamente o comportamento do sistema, permitindo-nos:
+
+Impor Invariantes: Regras de negócio que devem ser mantidas em estado de consistência imediata 
+(ex: obrigatoriedade de saldo inicial em uma Account).
+
+Aplicar Políticas Corretivas: Mecanismos de compensação para lidar com eventuais quebras de consistência ou 
+conflitos de concorrência.
+
+Este canvas guia a discussão iterativa sobre o ciclo de vida das entidades (Group, Category, Transaction) e seus comandos, 
+garantindo que o estado interno do domínio permaneça íntegro em todos os cenários.
 
 ![./docs/images/core-transaction/bc-canvas.png](./docs/images/core-transaction/aggregate-canvas-account.png)
+
+![./docs/images/core-transaction/bc-canvas.png](./docs/images/core-transaction/aggregate-canvas-group.png)
+
+![./docs/images/core-transaction/bc-canvas.png](./docs/images/core-transaction/aggregate-canvas-category.png)
+
+![./docs/images/core-transaction/bc-canvas.png](./docs/images/core-transaction/aggregate-canvas-transaction.png)
 
 Foco: Imutabilidade e Auditoria.
 
